@@ -1,0 +1,18 @@
+html{
+    width: 100%;
+}
+
+body {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+svg {
+    margin: 1vw;
+    border: black 1px solid;
+    width: 100vh;
+    height: 80vh;
+}
