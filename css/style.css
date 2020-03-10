@@ -14,9 +14,7 @@ body {
 }
 
 .content {
-    margin: 5vw;
-    width: 75vw;
-    height: 30vw;
+    margin: 2vw;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -25,4 +23,6 @@ body {
 
 svg {
     margin: 1vw;
+    border: dashed black 1px;
 }
+
