@@ -1,3 +1,69 @@
+
+
+// get the data
+d3.csv("/data/lines.csv").then(function (data) {
+
+  data = prepareData(data);
+
+  var cost = new LineGraph('cost', [data[0]]);
+
+  var range = cost.dataRange();
+  range["min"]["y"] = 0;
+  range["max"]["y"] = 80000;
+
+  var labels = cost.makeLabels();
+  labels.y = ["0", "20k", "40k", "60k", "80k"];
+
+  cost.suffix = '$';
+
+  var salary = new LineGraph('salary', [data[1]]);
+
+  var range = salary.dataRange();
+  range["min"]["y"] = 0;
+  range["max"]["y"] = 4000000;
+
+  var labels = salary.makeLabels();
+  labels.y = ["0", "1 Mio.", "2 Mio.", "3 Mio.", "4 Mio."];
+  
+  salary.suffix = '$';
+
+
+  var percentage_data = preparePercentageData(data);
+
+  var percentage = new LineGraph('percentage', percentage_data);
+
+  var range = percentage.dataRange();
+  range["min"]["y"] = -50;
+  range["max"]["y"] = 50;
+
+  var labels = percentage.makeLabels();
+  labels.y = ["-50%", "-25%", "0%", "25%", "50%"];
+
+  percentage.suffix = '%';
+
+
+  cost.add_to_update_list(salary);
+  cost.add_to_update_list(percentage);
+
+  salary.add_to_update_list(cost);
+  salary.add_to_update_list(percentage);
+
+  percentage.add_to_update_list(cost);
+  percentage.add_to_update_list(salary);
+
+  cost.setup()
+  salary.setup()
+  percentage.setup()
+
+
+});
+
+
+
+
+
+/*
+
 // select the img element
 var line_graph = d3.select("#line-graph");
 var circle_graph = d3.select("#circle-graph");
@@ -7,6 +73,7 @@ var step = 45;
 var padding = 25;
 var width = 18 * step + 2 * padding;
 var height = 10 * step + 2 * padding;
+
 
 
 // set up the scales of the graphs
@@ -189,8 +256,8 @@ line_graph.on("mousemove", function () {
 
     var delta = (((mouse[0] - padding) / step) - idx) * (details[idx + 1][i] - details[idx][i])
     circle_list[i].attr("r", details[idx][i] + delta);
-  
+
   }
 
 });
-
+*/

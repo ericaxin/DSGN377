@@ -1,10 +1,18 @@
+::-webkit-scrollbar {
+    display: none;
+}
+
 html{
+    padding: 0;
+    margin: 0;
     width: 100%;
     height: 100%;
     overflow: hidden;
 }
 
 body {
+    padding: 0;
+    margin: 0;
     width: 100%;
     height: 100%;
     display: flex;
@@ -14,15 +22,50 @@ body {
 }
 
 .content {
-    margin: 2vw;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    overflow: hidden;
+}
+
+.left {
+    width: 70%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.right {
+    width: 30%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    border-left: dashed black 1px;
+}
+
+.graph_container {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 75vh;
+}
+
+.line-graph {
+    width: 100%;
+    height: 100%;
 }
 
 svg {
     margin: 1vw;
-    border: dashed black 1px;
 }
 
