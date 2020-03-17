@@ -11,42 +11,60 @@
   </head>
 
   <body>
-    
-
     <div class="content">
       <div class="left">
-
         <div class="graph_container">
-          <svg id="cost" class="line-graph"></svg>
+          <div class="graph_title">
+            Total Costs
+          </div>
+          <svg id="cost" class="line_graph"></svg>
         </div>
 
         <div class="graph_container">
-          <svg id="salary" class="line-graph"></svg>
+          <div class="graph_title">
+            President's Salary
+          </div>
+          <svg id="salary" class="line_graph"></svg>
         </div>
 
         <div class="graph_container">
-          <svg id="percentage" class="line-graph"></svg>
+          <div class="graph_title">
+            Growth Rate Comparison
+          </div>
+          <svg id="percentage" class="line_graph"></svg>
         </div>
-
       </div>
 
       <div class="right">
+        <div class="title_container">
+          <div class="title">
+            Cost of Attending
+          </div>
+          <img src="assets/penn.png" width="80%" alt="logo" />
+        </div>
 
-        <h2>Cost of Attending</h2>
-        <img src="assets/penn.png" width="80%" alt="Amy">
+        <div class="circle_graph_container">
+          <svg id="circle" class="circle_graph"></svg>
+        </div>
 
-        <img src="assets/AmyG.svg" alt="Amy">
+        <div class="row">
+          <div class="face_container">
+            <img src="assets/AmyG.svg" alt="Amy" />
+            <div>Amy Gutman</div>
+          </div>
 
-        <img src="assets/JudithRodin.svg" alt="Judith">
-
-
+          <div class="face_container">
+            <img src="assets/JudithRodin.svg" alt="Judith" />
+            <div>Judith Rodin</div>
+          </div>
+        </div>
       </div>
     </div>
 
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/linegraph.js"></script>
+    <script src="js/circlegraph.js"></script>
     <script src="js/main.js"></script>
-
   </body>
 </html>

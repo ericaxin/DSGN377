@@ -20,6 +20,7 @@ class LineGraph {
         this.labels = null;
         this.image = null;
         this.update_list = [];
+        this.color=['red', 'blue'];
 
         // move selection line 
         this.svg.on("mousemove", function () {
@@ -82,7 +83,7 @@ class LineGraph {
             // create circle
             this.cursor_circle.push(this.svg.append("circle"));
             this.cursor_circle[line].attr("r", 5);
-            this.cursor_circle[line].attr("fill", "red");
+            this.cursor_circle[line].attr("fill", this.color[line]);
 
             // add text label
             this.cursor_text.push(this.svg.append("text"));
@@ -91,7 +92,7 @@ class LineGraph {
             this.cursor_text[line].attr("paint-order", "stroke");
             this.cursor_text[line].attr("stroke-width", "5px");
             this.cursor_text[line].attr("stroke", "white");
-            this.cursor_text[line].attr("fill", "#f5840c");
+            this.cursor_text[line].attr("fill", this.color[line]);
 
 
             if (y !== null) {
@@ -434,7 +435,7 @@ class LineGraph {
 
                     var path = [[x0, y0], [x1, y1]];
 
-                    this.drawPath(path, "red", 3);
+                    this.drawPath(path, this.color[line], 3);
 
 
                 }

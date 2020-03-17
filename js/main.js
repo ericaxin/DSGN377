@@ -1,6 +1,5 @@
 
-
-// get the data
+// get the data for line graphs
 d3.csv("/data/lines.csv").then(function (data) {
 
   data = prepareData(data);
@@ -59,6 +58,15 @@ d3.csv("/data/lines.csv").then(function (data) {
 });
 
 
+d3.csv("/data/circle.csv").then(function(data) {
+
+  data = prepareData(data);
+
+  //var circle_graph = CircleGraph(data)
+
+});
+
+
 
 
 
@@ -91,8 +99,6 @@ var details = [];
 
 // generate some random data for testing
 for (var x = 0; x <= width - 2 * padding; x += step) {
-
-  console.log(x);
 
   var y = (Math.random() - 0.5) * 150 + height / 2;
   data.push([padding + x, y]);
