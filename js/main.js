@@ -1,6 +1,6 @@
 
 // get the data for line graphs
-d3.csv("./DSGN377//data/lines.csv").then(function (data) {
+d3.csv("https://ericaxin.github.io/DSGN377/data/lines.csv").then(function (data) {
 
   data = prepareData(data);
 
@@ -58,7 +58,7 @@ d3.csv("./DSGN377//data/lines.csv").then(function (data) {
 });
 
 
-d3.csv("./DSGN377//data/circle.csv").then(function(data) {
+d3.csv("https://ericaxin.github.io/DSGN377/data/circle.csv").then(function(data) {
 
   data = prepareData(data);
 
