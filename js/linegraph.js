@@ -6,7 +6,7 @@ class LineGraph {
     // data - 2d array containing the data points
     // first dimension number of lines
     // second dimension array of points
-    constructor(id, data) {
+    constructor(id, data, func) {
 
         this.data = data;
         this.svg = d3.select("#" + id);
@@ -16,11 +16,18 @@ class LineGraph {
         this.step = 5;
         this.y_segments = 4;
         this.suffix = '';
+        this.prefix = '';
         this.range = null;
         this.labels = null;
         this.image = null;
         this.update_list = [];
-        this.color=['red', 'blue'];
+        this.color = ['red', 'blue'];
+        this.links = [
+            'https://ericaxin.github.io/DSGN377/assets/SmallJudithRodin.png',
+            'https://ericaxin.github.io/DSGN377/assets/SmallAmyG.png'
+        ]
+
+        this.faces = false;
 
         // move selection line 
         this.svg.on("mousemove", function () {
@@ -32,6 +39,25 @@ class LineGraph {
             for (var i = 0; i < this.update_list.length; i += 1) {
                 this.update_list[i].updateCursor(mouse[0]);
             }
+
+            var x = mouse[0];
+
+            if (x < this.padding) {
+
+                x = this.padding;
+
+            } else if (x > this.padding + this.width_point) {
+
+                x = this.padding + this.width_point;
+
+            }
+
+            // compute array index
+            var tmp = ((x - this.padding) / this.width_point) * this.data[0].length;
+            var idx = Math.floor(tmp);
+
+            func(idx);
+
 
         }.bind(this));
 
@@ -71,6 +97,20 @@ class LineGraph {
         this.cursor_line.attr("stroke-width", 1);
         this.cursor_line.attr("fill", "none");
 
+        this.cursor_xaxis = this.svg.append("text");
+        this.cursor_xaxis.attr("fill", 'black');
+
+        this.cursor_xaxis.text(Math.floor(this.data[0][0].x));
+        var y = this.padding + this.height_point;
+        var x = this.padding;
+
+        var bbox = this.cursor_xaxis.node().getBBox();
+        y = y + bbox.height * 1.25;
+        x = x - bbox.width * 0.5;
+
+        this.cursor_xaxis.attr("x", x);
+        this.cursor_xaxis.attr("y", y);
+
 
         this.cursor_circle = [];
         this.cursor_text = [];
@@ -79,11 +119,28 @@ class LineGraph {
 
             var y = this.convertY(this.data[line][0].y)
 
-
             // create circle
-            this.cursor_circle.push(this.svg.append("circle"));
-            this.cursor_circle[line].attr("r", 5);
-            this.cursor_circle[line].attr("fill", this.color[line]);
+            if (this.faces) {
+
+                this.faces_width = 75;
+                this.faces_height = 75;
+
+                this.cursor_circle.push(this.svg.append("image"));
+                this.cursor_circle[line].attr('xlink:href', this.links[0]);
+                this.cursor_circle[line].attr('width', this.faces_width);
+                this.cursor_circle[line].attr('width', this.faces_height);
+                this.cursor_circle[line].attr('x', -100);
+
+
+            } else {
+
+                this.cursor_circle.push(this.svg.append("circle"));
+                this.cursor_circle[line].attr("r", 5);
+                this.cursor_circle[line].attr("fill", this.color[line]);
+                this.cursor_circle[line].attr("cx", -5);
+                this.cursor_circle[line].attr("cy", -5);
+
+            }
 
             // add text label
             this.cursor_text.push(this.svg.append("text"));
@@ -97,12 +154,22 @@ class LineGraph {
 
             if (y !== null) {
 
-                this.cursor_circle[line].attr("cx", this.padding);
-                this.cursor_circle[line].attr("cy", y);
-               
+                if (this.faces) {
+
+                    this.cursor_circle[line].attr("x", this.padding - this.faces_width / 2);
+                    this.cursor_circle[line].attr("y", y - this.faces_height / 2);
+
+                } else {
+
+                    this.cursor_circle[line].attr("cx", this.padding);
+                    this.cursor_circle[line].attr("cy", y);
+
+                }
+
                 this.cursor_text[line].attr("x", this.padding - 25);
                 this.cursor_text[line].attr("y", y - 20);
-                this.cursor_text[line].text(Math.floor(this.data[line][0].y) + this.suffix);
+                this.cursor_text[line].text(this.prefix + Math.floor(this.data[line][0].y) + this.suffix);
+
 
             }
 
@@ -127,10 +194,22 @@ class LineGraph {
 
         this.cursor_line.attr("d", d3.line()(line_data));
 
-
         // compute array index
         var tmp = ((x - this.padding) / this.width_point) * this.data[0].length;
         var idx = Math.floor(tmp);
+
+        // year
+        this.cursor_xaxis.text(Math.floor(this.data[0][idx].x));
+        var y_year = this.padding + this.height_point;
+        var x_year = this.convertX(this.data[0][idx].x);
+
+        var bbox = this.cursor_xaxis.node().getBBox();
+        y_year = y_year + bbox.height * 1.25;
+        x_year = x_year - bbox.width * 0.5;
+
+        this.cursor_xaxis.attr("x", x_year);
+        this.cursor_xaxis.attr("y", y_year);
+
 
         var delta = tmp - idx;
 
@@ -143,18 +222,42 @@ class LineGraph {
                 }
 
                 var y = this.convertY(this.data[line][idx].y);
-    
+
                 if (y !== null) {
-    
-                    this.cursor_circle[line].attr("cx", x);
-                    this.cursor_circle[line].attr("cy", y);
-    
-                    this.cursor_text[line].attr("x", x - 25);
-                    this.cursor_text[line].attr("y", y - 20);
-                    this.cursor_text[line].text(Math.floor(this.data[line][idx].y) + this.suffix);
-    
+
+                    if (this.faces) {
+
+                        if (this.data[line][idx].x >= 2005) {
+
+                            if (this.cursor_circle[line].attr('xlink:href') !== this.links[1]) {
+
+                                this.cursor_circle[line].attr('xlink:href', this.links[1]);
+
+                            }
+
+                        } else {
+
+                            if (this.cursor_circle[line].attr('xlink:href') !== this.links[0]) {
+
+                                this.cursor_circle[line].attr('xlink:href', this.links[0]);
+                            }
+
+                        }
+
+
+                        this.cursor_circle[line].attr("x", x - this.faces_width / 2);
+                        this.cursor_circle[line].attr("y", y - this.faces_height / 2);
+
+                    } else {
+
+                        this.cursor_circle[line].attr("cx", x);
+                        this.cursor_circle[line].attr("cy", y);
+
+                    }
+
+
                 }
-    
+
             }
 
 
@@ -168,29 +271,61 @@ class LineGraph {
 
                 var y0 = this.convertY(this.data[line][idx].y);
                 var y1 = this.convertY(this.data[line][idx + 1].y);
-    
+
                 if (y0 !== null && y1 !== null) {
 
                     var y = y0 + (y1 - y0) * delta;
 
-                    var value = this.data[line][idx].y + (this.data[line][idx + 1].y - this.data[line][idx].y) * delta;
-    
-                    this.cursor_circle[line].attr("cx", x);
-                    this.cursor_circle[line].attr("cy", y);
-    
-                    this.cursor_text[line].attr("x", x - 25);
-                    this.cursor_text[line].attr("y", y - 20);
-                    this.cursor_text[line].text(Math.floor(value) + this.suffix);
-    
+                    if (this.faces) {
+
+                        if (this.data[line][idx].x >= 2005) {
+
+                            if (this.cursor_circle[line].attr('xlink:href') !== this.links[1]) {
+
+                                this.cursor_circle[line].attr('xlink:href', this.links[1]);
+
+                            }
+
+                        } else {
+
+                            if (this.cursor_circle[line].attr('xlink:href') !== this.links[0]) {
+
+                                this.cursor_circle[line].attr('xlink:href', this.links[0]);
+                            }
+
+                        }
+
+
+                        this.cursor_circle[line].attr("x", x - this.faces_width / 2);
+                        this.cursor_circle[line].attr("y", y - this.faces_height / 2);
+
+                    } else {
+
+                        this.cursor_circle[line].attr("cx", x);
+                        this.cursor_circle[line].attr("cy", y);
+
+                    }
+
+
+
                 }
-    
+
             }
 
         }
-        
+
+        // text
+        for (var line = 0; line < this.data.length; line += 1) {
+
+            var y = this.convertY(this.data[line][idx].y);
+            var x = this.convertX(this.data[line][idx].x);
+
+            this.cursor_text[line].attr("x", x - 25);
+            this.cursor_text[line].attr("y", y - 20);
+            this.cursor_text[line].text(this.prefix + Math.floor(this.data[line][idx].y) + this.suffix);
 
 
-
+        }
 
     }
 
@@ -322,6 +457,7 @@ class LineGraph {
 
 
         var text = this.svg.append("text");
+        text.attr("fill", "grey");
         text.text(label);
 
         var bbox = text.node().getBBox();
@@ -351,14 +487,15 @@ class LineGraph {
         var width = this.width - this.padding * 2;
         var height = this.height - this.padding * 2;
 
-        this.width_point = width;
-        this.height_point = height;
-
         var x_unit = Math.floor(width / x_range);
         var y_unit = Math.floor(height / this.y_segments);
 
         width = x_unit * x_range;
         height = y_unit * this.y_segments;
+
+
+        this.width_point = width;
+        this.height_point = height;
 
 
         for (var x = this.padding; x <= this.padding + width; x += x_unit * this.step) {
@@ -390,6 +527,8 @@ class LineGraph {
 
         }
 
+        this.y_unit = y_unit;
+        this.x_unit = x_unit;
 
     }
 

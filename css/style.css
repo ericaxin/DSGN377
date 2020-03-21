@@ -8,6 +8,11 @@ html{
     width: 100%;
     height: 100%;
     overflow: hidden;
+    font-family: 'Oswald', sans-serif;
+    font-style: normal;
+    font-weight: 300;
+
+    /*letter-spacing: 2px;*/
 }
 
 body {
@@ -50,11 +55,14 @@ body {
     flex-direction: column;
     align-items: center;
     overflow: hidden;
-    border-left: dashed black 1px;
+}
+
+.spacer {
+    padding: 2.5vh;
 }
 
 .graph_container {
-    padding-top: 10vh;
+    padding-top: 0vh;
     padding-bottom: -5vh;
     margin: 0;
     width: 100%;
@@ -64,7 +72,6 @@ body {
 
 .graph_title {
     font-size: 2em;
-    font-weight: 100;
     margin-bottom: -2em;
     width: 100%;
     display: flex;
@@ -107,7 +114,7 @@ body {
 
 .title {
     font-size: 2.5em;
-    font-weight: 100;
+    font-weight: 400;
 }
 
 .circle_graph_container {
@@ -119,6 +126,10 @@ body {
 .circle_graph {
     height: 100%;
     width: 100%;
+}
+
+.name_tag {
+    margin-top: -2vh;
 }
 
 svg {
