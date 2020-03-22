@@ -20,11 +20,12 @@ class LineGraph {
         this.range = null;
         this.labels = null;
         this.image = null;
+        this.unit = '';
         this.update_list = [];
         this.color = ['red', 'blue'];
         this.links = [
-            'https://ericaxin.github.io/DSGN377/assets/SmallJudithRodin.png',
-            'https://ericaxin.github.io/DSGN377/assets/SmallAmyG.png'
+            'https://raw.githubusercontent.com/ericaxin/DSGN377/gh-pages/assets/SmallJudithRodin.png',
+            'https://raw.githubusercontent.com/ericaxin/DSGN377/gh-pages/assets/SmallAmyG.png'
         ]
 
         this.faces = false;
@@ -122,8 +123,8 @@ class LineGraph {
             // create circle
             if (this.faces) {
 
-                this.faces_width = 75;
-                this.faces_height = 75;
+                this.faces_width = 50;
+                this.faces_height = 50;
 
                 this.cursor_circle.push(this.svg.append("image"));
                 this.cursor_circle[line].attr('xlink:href', this.links[0]);
@@ -453,11 +454,11 @@ class LineGraph {
 
     }
 
-    drawText(x, y, label, type) {
+    drawText(x, y, label, type, color) {
 
 
         var text = this.svg.append("text");
-        text.attr("fill", "grey");
+        text.attr("fill", color);
         text.text(label);
 
         var bbox = text.node().getBBox();
@@ -472,6 +473,9 @@ class LineGraph {
             y = y + bbox.height * 0.5;
             x = x - bbox.width - 10;
 
+        } else if (type === "above") {
+            y = y - bbox.height * 1.25;
+            x = x - bbox.width * 0.5;
         }
 
         text.attr("x", x);
@@ -509,7 +513,7 @@ class LineGraph {
                 var text_y = this.padding + height;
                 var text = (x - this.padding) / (x_unit * this.step);
 
-                this.drawText(text_x, text_y, this.labels.x[text], "below");
+                this.drawText(text_x, text_y, this.labels.x[text], "below", "grey");
             }
 
         }
@@ -523,13 +527,15 @@ class LineGraph {
             var text_y = y;
             var text = (this.padding + height - y) / y_unit
 
-            this.drawText(text_x, text_y, this.labels.y[text], "left");
+            this.drawText(text_x, text_y, this.labels.y[text], "left", "grey");
 
         }
 
         this.y_unit = y_unit;
         this.x_unit = x_unit;
 
+        this.drawText(this.padding + x_unit * 10,  this.padding * 1.4 + height, "YEARS", "below", "black")
+        this.drawText(this.padding - 10,  this.padding , this.unit, "above", "black")
     }
 
     convertX(x) {

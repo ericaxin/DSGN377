@@ -170,6 +170,80 @@ class CircleGraph {
 
     drawLegend() {
 
+        var labels = [
+            "Dorm & Meal Plan",
+            "General Fee",
+            "Tuition",
+            "Technology Fee"
+        ];
+
+        var color = [
+            '#b0b4d7',
+            '#aacedc',
+            '#bfd4c5',
+            '#e8dbbb'
+        ];
+
+        var x_space = 75;
+
+        for (var idx = 0; idx < this.color.length; idx += 1) {
+
+            var dot = this.svg.append("circle");
+            dot.attr("fill", color[idx]);
+
+            dot.attr("r", 7);
+            dot.attr("cx", x_space);
+            dot.attr("cy", this.height - 25 * idx  - 10);
+
+            var text = this.svg.append("text");
+
+            text.attr("x", x_space + 20)
+            text.attr("y", this.height - 25 * idx - 5);
+            text.text(labels[idx]);
+
+
+        }
+
+
+        /*
+        var r = Math.sqrt(10000 / this.range.max.y) * this.cell_size / 2;
+
+        var dot = this.svg.append("circle");
+        dot.attr("stroke", "grey");
+        dot.attr("fill", "white");
+
+        dot.attr("r", r);
+        dot.attr("cx", 310);
+        dot.attr("cy", this.height - 50);
+
+
+        var path = this.svg.append("path");
+
+        var line = [
+            [310 + r, this.height - 50 ],
+            [350, this.height - 50 ]
+        ];
+
+        path.attr("d", d3.line()(line));
+        path.attr("stroke", "gray");
+        path.attr("stroke-width", 1);
+        path.attr("fill", "none");
+
+
+        r = Math.sqrt(1000 / this.range.max.y) * this.cell_size / 2;
+
+        dot = this.svg.append("circle");
+        dot.attr("stroke", "grey");
+        dot.attr("fill", "white");
+
+        dot.attr("r", r);
+        dot.attr("cx", 310);
+        dot.attr("cy", this.height - 35);
+        */
+
+        
+
+
     }
 
 
