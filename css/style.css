@@ -65,12 +65,13 @@ body {
     padding-bottom: 5vh;
     margin: 0;
     width: 100%;
-    height: 60vh;
+    height: 30vw;
 
 }
 
 .graph_title {
-    font-size: 2em;
+    font-size: 1.5em;
+    font-weight: 400;
     margin-bottom: -2em;
     width: 100%;
     display: flex;
@@ -113,19 +114,42 @@ body {
 }
 
 .title {
-    font-size: 2.5em;
+    font-size: 1.5em;
     font-weight: 400;
+}
+
+.logo_row {
+    margin-top: -1em;
+    margin-bottom: 1em;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 1em;
+}
+
+.logo_text {
+    padding-left: 0.75em;
+    font-size: 1.5em;
+    font-weight: 400;
+    color: black;
 }
 
 .circle_graph_container {
     margin: 0;
+    padding: 0;
     width: 100%;
     height: 40%;
+    display: flex;
+    align-items: center;
 }
 
 .circle_graph {
-    height: 100%;
-    width: 100%;
+    margin: 0;
+    padding: 0;
+    height: 270px;
+    width: 415px;
 }
 
 .name_tag {
@@ -135,6 +159,8 @@ body {
 .faces {
     max-width: 50%;
 }
+
+
 
 svg {
     margin: 1vw;

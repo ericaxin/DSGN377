@@ -11,10 +11,12 @@ d3.csv("https://ericaxin.github.io/DSGN377/data/lines.csv").then(function (data)
 
   data = prepareData(data);
 
+  console.log(data);
+
   var cost = new LineGraph('cost', [data[0]], update);
 
   cost.color = ['#004785']
-  cost.unit = 'Cost ($)'
+  cost.unit = 'COST ($)'
 
   var range = cost.dataRange();
   range["min"]["y"] = 0;
@@ -27,7 +29,7 @@ d3.csv("https://ericaxin.github.io/DSGN377/data/lines.csv").then(function (data)
 
   var salary = new LineGraph('salary', [data[1]], update);
 
-  salary.unit = 'Salary ($)'
+  salary.unit = 'SALARY ($)'
 
   salary.faces = true;
   salary.color = ['#a90533']
@@ -46,7 +48,7 @@ d3.csv("https://ericaxin.github.io/DSGN377/data/lines.csv").then(function (data)
 
   var percentage = new LineGraph('percentage', percentage_data, update);
 
-  percentage.unit = 'Growth Rate'
+  percentage.unit = 'GROWTH RATE'
 
   percentage.color = ['#004785', '#a90533']
 

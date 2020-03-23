@@ -24,8 +24,8 @@ class LineGraph {
         this.update_list = [];
         this.color = ['red', 'blue'];
         this.links = [
-            'https://raw.githubusercontent.com/ericaxin/DSGN377/gh-pages/assets/SmallJudithRodin.png',
-            'https://raw.githubusercontent.com/ericaxin/DSGN377/gh-pages/assets/SmallAmyG.png'
+            'https://ericaxin.github.io/DSGN377/assets/SmallJudithRodin.png',
+            'https://ericaxin.github.io/DSGN377/assets/SmallAmyG.png'
         ]
 
         this.faces = false;
@@ -199,10 +199,10 @@ class LineGraph {
         var tmp = ((x - this.padding) / this.width_point) * this.data[0].length;
         var idx = Math.floor(tmp);
 
-        // year
-        this.cursor_xaxis.text(Math.floor(this.data[0][idx].x));
+
+        this.cursor_xaxis.text(Math.floor(this.data[0][0].x + idx));
         var y_year = this.padding + this.height_point;
-        var x_year = this.convertX(this.data[0][idx].x);
+        var x_year = this.convertX(this.data[0][0].x + idx);
 
         var bbox = this.cursor_xaxis.node().getBBox();
         y_year = y_year + bbox.height * 1.25;
@@ -315,16 +315,20 @@ class LineGraph {
 
         }
 
+
         // text
         for (var line = 0; line < this.data.length; line += 1) {
 
-            var y = this.convertY(this.data[line][idx].y);
-            var x = this.convertX(this.data[line][idx].x);
+            if (idx < this.data[line].length) {
 
-            this.cursor_text[line].attr("x", x - 25);
-            this.cursor_text[line].attr("y", y - 20);
-            this.cursor_text[line].text(this.prefix + Math.floor(this.data[line][idx].y) + this.suffix);
+                var y = this.convertY(this.data[line][idx].y);
+                var x = this.convertX(this.data[line][idx].x);
 
+                this.cursor_text[line].attr("x", x - 25);
+                this.cursor_text[line].attr("y", y - 20);
+                this.cursor_text[line].text(this.prefix + Math.floor(this.data[line][idx].y) + this.suffix);
+
+            }
 
         }
 
@@ -459,6 +463,7 @@ class LineGraph {
 
         var text = this.svg.append("text");
         text.attr("fill", color);
+        text.attr("font-size", "1em");
         text.text(label);
 
         var bbox = text.node().getBBox();
@@ -534,8 +539,8 @@ class LineGraph {
         this.y_unit = y_unit;
         this.x_unit = x_unit;
 
-        this.drawText(this.padding + x_unit * 10,  this.padding * 1.4 + height, "YEARS", "below", "black")
-        this.drawText(this.padding - 10,  this.padding , this.unit, "above", "black")
+        this.drawText(this.padding + x_unit * 10, this.padding * 1.4 + height, "YEARS", "below", "black")
+        this.drawText(this.padding - 10, this.padding, this.unit, "above", "black")
     }
 
     convertX(x) {
