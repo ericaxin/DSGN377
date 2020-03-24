@@ -175,10 +175,10 @@ class CircleGraph {
     drawLegend() {
 
         var labels = [
-            "DORM & MEAL PLAN",
-            "GENERAL FEE",
+            "TECHNOLOGY FEE",
             "TUITION",
-            "TECHNOLOGY FEE"
+            "GENERAL FEE",
+            "DORM & MEAL PLAN"
         ];
 
         var color = [

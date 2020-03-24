@@ -38,6 +38,8 @@ body {
 }
 
 .left {
+    padding-left: 10vw;
+    padding-right: -20vw;
     width: 70%;
     height: 100%;
     display: flex;
@@ -153,13 +155,19 @@ body {
 }
 
 .name_tag {
-    margin-top: 1vh;
+    margin-top: 1.5em;
+    font-size: 0.8em;
 }
 
 .faces {
     max-width: 50%;
 }
 
+.quaker {
+    position: fixed;
+    bottom: 100px;
+    left:-10px;
+}
 
 
 svg {

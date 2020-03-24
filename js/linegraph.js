@@ -100,6 +100,7 @@ class LineGraph {
 
         this.cursor_xaxis = this.svg.append("text");
         this.cursor_xaxis.attr("fill", 'black');
+        this.cursor_xaxis.attr("font-size", "0.8em");
 
         this.cursor_xaxis.text(Math.floor(this.data[0][0].x));
         var y = this.padding + this.height_point;
@@ -145,7 +146,7 @@ class LineGraph {
 
             // add text label
             this.cursor_text.push(this.svg.append("text"));
-            this.cursor_text[line].attr("font-size", "20px");
+            this.cursor_text[line].attr("font-size", "1em");
             this.cursor_text[line].attr("font-weight", "900");
             this.cursor_text[line].attr("paint-order", "stroke");
             this.cursor_text[line].attr("stroke-width", "5px");
@@ -463,7 +464,7 @@ class LineGraph {
 
         var text = this.svg.append("text");
         text.attr("fill", color);
-        text.attr("font-size", "1em");
+        text.attr("font-size", "0.8em");
         text.text(label);
 
         var bbox = text.node().getBBox();
